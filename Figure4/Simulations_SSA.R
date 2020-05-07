@@ -10,7 +10,7 @@ files <- list.files() %>%
 map(files, function(x) ssa(modelFile = x,
                            outputDir = x %>% paste0("Exp_", .),
                            time = 36000,
-                           realizations = 10^5,
+                           realizations = 10^4,
                            intervals = 2,
                            keepHistograms = TRUE,
                            bins = 1000,
