@@ -1,104 +1,6 @@
 library(tidyverse)
 library(magrittr)
 library(cowplot)
-library(seewave)
-
-# set.seed(123234)
-# params <- data.frame(k0 = 0.05,
-#                      k1 = 0.2,
-#                      d0 = 0.05,
-#                      v0 = 0.00005)
-# 
-# count1 <- c()
-# count2 <- c()
-# 
-# n_runs <- 10000
-# 
-# pdf("Samples_take1.pdf")
-# for (i in 1:100) {
-#   if (!(i %% 1000)) print(i)
-#   time_intrvls <- params %$%
-#     c(k0 = k0, k1 = k1) %>%
-#     rep(., n_runs) %>% 
-#     map_dbl(~ rexp(1, .x)) 
-#   
-#   polymrase_arrvl <- params %$%
-#     rpois(1, v0*(time_intrvls %>% sum())) %>%
-#     seq(to = .) %>%
-#     map_dbl(., ~ rexp(1, params$v0)) %>%
-#     cumsum() %>%
-#     data.frame(t = ., y = 1)
-#   
-#   df <- data.frame(Stop = time_intrvls %>% cumsum()) 
-#   df$Start <- c(0, df$Stop %>% extract(., -length(.)))
-#   df$type <- c("OFF", "ON") %>% rep(., n_runs) %>%
-#     factor(., levels = c("ON", "OFF"))
-#   
-#   polymrase_arrvl %<>% subset(., t < time_intrvls %>% sum())
-#   polymrase_arrvl$type <- apply(polymrase_arrvl, 1,
-#                                 function(x) {
-#                                   subset(df, (Start < x[1]) & (x[1] < Stop))$type %>% as.character()
-#                                   })
-#   
-#   time_scale <- params %$%
-#     sum(k0, k1) %>%
-#     divide_by(1, .)
-#   
-#   
-#   count1 <- c(polymrase_arrvl$type %>% 
-#                 equals(., "ON") %>%
-#                 sum(), 
-#               count1)
-#   
-#   plot_layers <- list(coord_cartesian(xlim = c(0, time_intrvls %>% sum()),
-#                                       ylim = c(0, 1)),
-#                       scale_x_continuous(breaks = time_intrvls %>% 
-#                                            cumsum() %>% 
-#                                            as.numeric() %>%
-#                                            c(0, .)),
-#                       theme(axis.line.x = element_line(),
-#                             panel.grid = element_blank(),
-#                             axis.text = element_blank(),
-#                             axis.ticks.y = element_blank(),
-#                             legend.title = element_blank()
-#                             # legend.direction = "horizontal",
-#                             # legend.position = "bottom"
-#                       ),
-#                       # geom_segment(data = df,
-#                       #              aes(x = Start, xend = Stop, color = type),
-#                       #              y = 0, yend = 0, size = 2),
-#                       geom_segment(aes(x = t, y = y, xend =t, color = type), yend = 0),
-#                       geom_point(),
-#                       ylab(NULL),
-#                       xlab("Time"))
-#   
-#   
-#   p1 <- ggplot(polymrase_arrvl, aes(t, y))  + 
-#     plot_layers +
-#     ggtitle(paste0("Transcriptions : ", count1[1]))
-#   
-#   nudge_by <- runif(nrow(polymrase_arrvl), min = -100*time_scale, max = 100*time_scale)
-#   polymrase_arrvl$t %<>% add(., nudge_by)
-#   polymrase_arrvl$type <- apply(polymrase_arrvl, 1,
-#                                 function(x) subset(df, (Start < as.numeric(x[1])) & 
-#                                                      (as.numeric(x[1]) < Stop))$type)
-#   
-#   count2 <- c(polymrase_arrvl$type %>% 
-#                 equals(., "ON") %>%
-#                 sum(), 
-#               count2)
-#   
-#   p2 <- ggplot(polymrase_arrvl, aes(t, y))  +
-#     plot_layers +
-#     ggtitle(paste0("Transcriptions : ", count2[1]))
-#   
-#   p <- plot_grid(p1, p2, nrow =2)
-#   
-#   print(p)
-# }
-# 
-# dev.off()
-
 
 df <- data.frame(x = seq(0, 2*pi, length.out = 1000) %>% sin(),
                  y = seq(0, 2*pi, length.out = 1000) %>% cos())
@@ -194,7 +96,6 @@ p2c <- ggplot(df, aes(x, y)) +
   coord_cartesian(ylim = c(-3, 3))
 
 p2_prefix <- ggplot(data.frame(), aes()) +
-  # theme_nothing() +
   ggtitle("Time intervals", 
           subtitle = "(The recipient urns)") +
   theme_minimal() +
@@ -247,12 +148,6 @@ params <- data.frame(k0 = 0.3,
 
 for (ix in 1:3) {
   count1 <- c()
-  # n_runs <- 100
-  # 
-  # time_intrvls <- params %$%
-  #   c(k0 = k0, k1 = k1) %>%
-  #   rep(., n_runs) %>%
-  #   map_dbl(~ rexp(1, .x))
   time_intrvls <- rexp(1, params$k0)
   while (time_intrvls %>% max() %>% is_less_than(1/params$d0)) {
     k_this <- ifelse(length(time_intrvls) %% 2, params$k1, params$k0)
@@ -263,22 +158,10 @@ for (ix in 1:3) {
   time_intrvls[length(time_intrvls)] <- 1/params$d0
   
   polymrase_arrvl <-  rpois(1, params$v0/params$d0) %>% #params %$%
-    #rpois(1, v0*(time_intrvls %>% sum())) %>%
     seq(to = .) %>%
     map_dbl(., ~ rexp(1, params$v0)) %>%
     cumsum() %>%
     data.frame(t = ., y = 0.9)
-  
-  # ggplot(polymrase_arrvl)  + 
-  #   geom_point(aes(x=t, y =y)) +
-  #   # geom_segment(aes(x = Start, xend = Stop, color = type),
-  #   #              y = 0, yend = 0, size = 2) +
-  #   theme_nothing() +
-  #   coord_cartesian(ylim = c(0, 0)) + 
-  #   # scale_x_continuous(expand = c(0, 0)) +
-  #   scale_y_continuous(expand = c(0, 0)) +
-  #   scale_color_manual(values = c("#e10600", "grey")) +
-  #   labs(x = NULL, y = NULL)
   
   df <- data.frame(Stop = time_intrvls)# %>% cumsum())
   df$Start <- c(0, df$Stop %>% magrittr::extract(., -length(.)))
@@ -314,39 +197,21 @@ for (ix in 1:3) {
                             axis.text = element_blank(),
                             axis.ticks.y = element_blank(),
                             legend.title = element_blank()
-                            # legend.direction = "horizontal",
-                            # legend.position = "bottom"
                       ),
                       geom_segment(data = df,
                                    aes(x = Start, xend = Stop, color = type),
                                    y = 0, yend = 0, size = 2),
-                      # geom_segment(aes(x = t, y = y, xend =t, color = type), yend = 0),
-                      # geom_point(),
                       ylab(NULL),
                       xlab(NULL)
-                      # xlab("Time")
   )
   
   
-  
-  
-  
-  # df <- as.data.frame(lapply(df, unlist))
-  # polymrase_arrvl <- as.data.frame(lapply(polymrase_arrvl, unlist))
-  
   plot_layers2 <- list(coord_cartesian(xlim = c(0, df$Stop %>% tail(., 1)),
                                        ylim = c(-0.5, 1)),
-                       # scale_x_continuous(breaks = time_intrvls %>%
-                       #                      cumsum() %>%
-                       #                      as.numeric() %>%
-                       #                      c(0, .)),
-                       theme(#axis.line.x = element_line(),
-                         panel.grid = element_blank(),
+                       theme(panel.grid = element_blank(),
                          axis.text = element_blank(),
                          axis.ticks.y = element_blank(),
                          legend.title = element_blank()
-                         # legend.direction = "horizontal",
-                         # legend.position = "bottom"
                        ),
                        geom_segment(data = df,
                                     aes(x = Start, xend = Stop, color = type),
@@ -387,14 +252,8 @@ for (ix in 1:3) {
   
   df_urn$type %<>%
     factor(., levels = c("ON", "OFF"))
-  # previous <- df_urn$type[1]
-  # shade <- c(paste0(previous, 1))
-  # for (i in df_urn$type[-1]) {
-  #   shade <- ifelse(i == previous, )
-  # }
   
   polymrase_arrvl <-  rpois(1, params$v0/params$d0) %>% #params %$%
-    #rpois(1, v0*(time_intrvls %>% sum())) %>%
     seq(to = .) %>%
     map_dbl(., ~ rexp(1, params$v0)) %>%
     cumsum() %>%
@@ -410,17 +269,11 @@ for (ix in 1:3) {
   
   plot_layers3 <- list(coord_cartesian(xlim = c(0, df_urn$Stop %>% tail(., 1)),
                                        ylim = c(-0.5, 1)),
-                       # scale_x_continuous(breaks = time_intrvls %>%
-                       #                      cumsum() %>%
-                       #                      as.numeric() %>%
-                       #                      c(0, .)),
                        theme(#axis.line.x = element_line(),
                          panel.grid = element_blank(),
                          axis.text = element_blank(),
                          axis.ticks.y = element_blank(),
                          legend.title = element_blank()
-                         # legend.direction = "horizontal",
-                         # legend.position = "bottom"
                        ),
                        geom_segment(data = df_urn,
                                     aes(x = Start, xend = Stop, color = type),
@@ -460,18 +313,13 @@ for (ix in 1:3) {
 }
 
 p4 <- ggplot()  +
-  # geom_segment(df_urn, mapping = aes(x = Start, xend = Stop, color = type),
-  #              y = 0, yend = 0, size = 2) +
   geom_rect(df_urn, mapping = aes(xmin = Start, xmax = Stop, fill = type), 
             ymin=0, ymax=0.01) +
   theme_nothing() +
   coord_cartesian(ylim = c(0, 0.01)) + 
-  # scale_x_continuous(expand = c(0, 0)) +
   scale_y_continuous(expand = c(0.02, 0.02)) +
-  # scale_color_manual(values = c("#e10600", "grey")) +
   scale_fill_manual(values = c("#e10600", "grey")) +
   labs(x = NULL, y = NULL) +
-  #annotate("segment", x=df_div$x, xend = df_div$xend, y = 0.04, yend = 0.07)
   geom_segment(df_div, mapping = aes(x = x, xend = xend), y = 0.003, yend = 0.007)  
 
 
@@ -505,94 +353,8 @@ pp2 <- plot_grid(p_intr_21, p_intr_22, p_intr_23, nrow = 3, labels = c("d", NA, 
 p21 <- plot_grid(pp1, pp0, pp2, nrow = 1,
                  scale = 0.9, rel_heights = c(1, 1, 1))
 
-# p21 <- plot_grid(pp1, )
 
-# p21 <- plot_grid(p, p_intrctn1, p_intrctn2, nrow = 3, rel_heights = c(0.6, 0.3, 0.3),
-#                  labels = c(NA, "c"))
-
-ggsave("The_Urn_Scheme2.pdf",
+ggsave("Figure1.pdf",
        p21,
        width = 10.2,
        height = 4)
-# ggsave("test.pdf", p11,
-#        width = 1.7,
-#        height = 3)
-# ggsave("test2.pdf", p12,
-#        width = 1.7,
-#        height = 3)
-
-#-----------------------------
-#Nudge each of the T_i's by uniformly distributed random variables.
-#The uniform distribution is U(-e, e).
-#Take a range of values for e, e.g., 0, 0.001*(1/k0+k1), 0.005*(1/k0+k1), 0.01*(1/k0+k1),
-#{0.05, 0.1, 0.5, 1, 1.5, 2, 5, 10, 15, 20}*(1/k0+k1)
-#Call these nudge_widths.
-#For each nudge_width, do 100000 samples.
-# 
-# set.seed(123234)
-# dat_ref <- list()
-# dat_nudged <- list()
-# for (nudge_ratio in c(0.01, 0.1, 1, 10, 100)) {
-#   params <- data.frame(k0 = 0.05,
-#                        k1 = 0.2,
-#                        d0 = 0.05,
-#                        v0 = 0.05)
-#   
-#   count1 <- c()
-#   count2 <- c()
-#   
-#   n_runs <- 1000
-#   
-#   for (i in 1:1000) {
-#     if (!(i %% 10)) print(i)
-#     time_intrvls <- params %$%
-#       c(k0 = k0, k1 = k1) %>%
-#       rep(., n_runs) %>%
-#       map_dbl(~ rexp(1, .x))
-#     
-#     polymrase_arrvl <- params %$%
-#       rpois(1, v0*(time_intrvls %>% sum())) %>%
-#       seq(to = .) %>%
-#       map_dbl(., ~ rexp(1, params$v0)) %>%
-#       cumsum() %>%
-#       data.frame(t = ., y = 1)
-#     
-#     df <- data.frame(Stop = time_intrvls %>% cumsum())
-#     df$Start <- c(0, df$Stop %>% extract(., -length(.)))
-#     df$type <- c("OFF", "ON") %>% rep(., n_runs) %>%
-#       factor(., levels = c("ON", "OFF"))
-#     
-#     polymrase_arrvl %<>% subset(., t < time_intrvls %>% sum())
-#     polymrase_arrvl$type <- apply(polymrase_arrvl, 1,
-#                                   function(x) {
-#                                     subset(df, (Start < x[1]) & (x[1] < Stop))$type %>% as.character()
-#                                   })
-#     
-#     time_scale <- params %$%
-#       sum(k0, k1) %>%
-#       divide_by(1, .)
-#     
-#     
-#     count1 <- c(polymrase_arrvl$type %>%
-#                   equals(., "ON") %>%
-#                   sum(),
-#                 count1)
-#     
-#     nudge_by <- runif(nrow(polymrase_arrvl), min = -nudge_ratio*time_scale, max = nudge_ratio*time_scale)
-#     polymrase_arrvl$t %<>% add(., nudge_by)
-#     polymrase_arrvl$type <- apply(polymrase_arrvl, 1,
-#                                   function(x) subset(df, (Start < as.numeric(x[1])) &
-#                                                        (as.numeric(x[1]) < Stop))$type)
-#     
-#     count2 <- c(polymrase_arrvl$type %>%
-#                   equals(., "ON") %>%
-#                   sum(),
-#                 count2)
-# 
-#   }
-#   
-#   dat_ref[[paste0("X_", nudge_ratio)]] <- count1
-#   dat_nudged[[paste0("X_", nudge_ratio)]] <- count2
-# }
-# 
-# dists <- mapply(kl.dist, dat_ref, dat_nudged)

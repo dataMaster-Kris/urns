@@ -34,7 +34,6 @@ labels <- c("italic(k)[0]~'/'~italic(k)[1]~'='~100",
             "italic(k)[0]~'/'~italic(k)[1]~'='~10")
 df$set <- labels[(df$set == 10) + 1]
 
-# df <- subset(df, type != "NB")
 df1 <- subset(df, type != "Hypergeometric")
 df1$type <- factor(df1$type, levels = c("Delaporte", "NB"))
 df2 <- subset(df, type == "Hypergeometric")
@@ -53,8 +52,7 @@ p1 <- ggplot(df1, aes(x = m, y = value, shape = type)) +
         panel.grid.minor = element_blank(), panel.grid.major = element_blank(),
         legend.title = element_blank(),
         legend.position = "none") +
-  scale_shape_manual(values = c(0,1, 2))#, labels = c("Transcriptional lapses", 
-                                                 # "Transcriptional bursts"))
+  scale_shape_manual(values = c(0,1, 2))
 
 p_legend <- ggplot() +
   theme_void()+
@@ -79,7 +77,6 @@ p
 #----------------
 #Fig 3a.
 s1 <- data.frame(y=c(0, 0, 1, 1, 0, 0, 1, 1, 0, 0),
-                 #c("OFF", "ON")[c(0, 0, 1, 1, 0, 0, 1, 1, 0, 0)+1], 
                  x=c(0, 10, 10, 11, 11, 33, 33, 33.5, 33.5, 50),
                  type = "Transcriptional\nburst")
 
@@ -95,14 +92,13 @@ pa <- ggplot(df, aes(x = x, y = y)) +
   facet_grid(type ~ .) +
   scale_y_continuous(breaks = c(0, 1)) +
   theme_bw()+
-  theme(#strip.text = element_text(size=7.5, lineheight=10.0),
-        panel.grid.minor = element_blank(), panel.grid.major = element_blank())+
+  theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank())+
   xlab("Time (arbitrary units)") +
   ylab("Transcription rate")
 
 p2 <- plot_grid(pa, p, labels = "auto", scale =0.95)
 
-ggsave("Fig3_new.pdf", 
+ggsave("Figure3.pdf", 
        p2,
        width = 17.4,
        height = 8.7,
