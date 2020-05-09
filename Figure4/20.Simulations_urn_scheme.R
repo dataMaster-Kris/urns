@@ -103,8 +103,8 @@ for (i in 1:nrow(prot_params)) {
   nBlack <- rnbinom(n = n_sims, 
                     size = prot_params$alpha[i],
                     prob = 1/(1+prot_params$beta[i]))
-  nRed <- prot_params$nRed[i] %>% round()
-  nGrey <- prot_params$nGrey[i] %>% round()
+  nRed <- prot_params$nRed[i] %>% round() %>% c(., 1) %>% max()
+  nGrey <- prot_params$nGrey[i] %>% round() %>% c(., 1) %>% max()
   
   prot_obs_counts_in_red[[i]] <- assign_to_recepient_urns_and_count(nBlack, nRed, nGrey) %>%
     unlist() %>% table()
@@ -208,10 +208,10 @@ for (i in 1:nrow(prot_params)) {
   nBlack <- rnbinom(n = n_sims, 
                     size = prot_params$alpha[i],
                     prob = 1/(1+prot_params$beta[i]))
-  nRed <- prot_params$nRed[i] %>% round()
-  nGrey <- prot_params$nGrey[i] %>% round()
-  nPpl <- prot_params$nPpl[i] %>% round()
-  nBlue <- prot_params$nBlue[i] %>% round()
+  nRed <- prot_params$nRed[i] %>% round() %>% c(., 1) %>% max()
+  nGrey <- prot_params$nGrey[i] %>% round() %>% c(., 1) %>% max()
+  nPpl <- prot_params$nPpl[i] %>% round() %>% c(., 1) %>% max()
+  nBlue <- prot_params$nBlue[i] %>% round() %>% c(., 1) %>% max()
   
   prot_obs_counts_in_red[[i]] <- 
     assign_to_recepient_urns_and_count(nBlack, nPpl, nBlue) %>%

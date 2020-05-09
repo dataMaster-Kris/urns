@@ -40,7 +40,7 @@ p1 <-ggplot(df2, aes(x = mRNA_copies, y = value)) +
   theme(strip.background = element_blank(),
         axis.text = element_text(size = 6)) +
   xlab(expression(italic(m)[italic(1)])) +
-  ylab(expression(italic(p)[italic(m)[italic(1)]])) +
+  ylab(expression(italic(widehat(p))[italic(m)[italic(1)]])) +
   scale_y_continuous(breaks = c(0, 0.25, 0.5))
 
 #----------------------------
@@ -86,7 +86,7 @@ p2 <- ggplot(df2, aes(x = prot_copies, y = value)) +
   theme(strip.background = element_blank(),
         axis.text = element_text(size = 6)) +
   xlab(expression(italic(m)[italic(2)])) +
-  ylab(expression(italic(p)[italic(m)[italic(2)]])) +
+  ylab(expression(italic(widehat(p))[italic(m)[italic(2)]])) +
   scale_y_continuous(breaks = c(0, 0.035, 0.07), limits = c(0, 0.06666667))
 
 
@@ -133,7 +133,7 @@ p3 <- ggplot(df2, aes(x = mRNA_copies, y = value)) +
   theme(strip.background = element_blank(),
         axis.text = element_text(size = 6)) +
   xlab(expression(italic(m)[italic(1)])) +
-  ylab(expression(italic(p)[italic(m)[italic(1)]])) +
+  ylab(expression(italic(widehat(p))[italic(m)[italic(1)]])) +
   scale_y_continuous(breaks = c(0, 0.25, 0.50), limits = c(0, 0.4761905))
 
 
@@ -179,7 +179,7 @@ p4 <- ggplot(df2, aes(x = prot_copies, y = value)) +
   theme(strip.background = element_blank(),
         axis.text = element_text(size = 6))  +
   xlab(expression(italic(m)[italic(2)])) +
-  ylab(expression(italic(p)[italic(m)[italic(2)]])) +
+  ylab(expression(italic(widehat(p))[italic(m)[italic(2)]])) +
   scale_y_continuous(breaks = c(0, 0.01, 0.02), limits = c(0, 0.01904762))
 
 library(cowplot)
@@ -206,7 +206,7 @@ p_final <- plot_grid(legend, p, ncol = 1,
                      rel_heights = c(0.1, 0.9))
 p_final
 
-ggsave("Figure3.pdf",
+ggsave("Figure4.pdf",
        plot = p_final,
        width = 16.4,
        height = 8.3, units = "cm")

@@ -1,0 +1,305 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     11418,        297]
+NotebookOptionsPosition[      9591,        266]
+NotebookOutlinePosition[      9927,        281]
+CellTagsIndexPosition[      9884,        278]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+    "Get", " ", "predictions", " ", "from", " ", "transcriptional", " ", 
+     "lapse", " ", "model"}], ",", " ", 
+    RowBox[{
+     RowBox[{
+     "transcriptional", " ", "burst", " ", "model", " ", "and", " ", "exact", 
+      " ", "solution", " ", "of", " ", "Peccoud"}], "-", 
+     RowBox[{"Ycart", " ", "solution"}]}]}], "*)"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"k0", " ", "=", " ", "0.1"}], "\[IndentingNewLine]", 
+   RowBox[{"k1", " ", "=", " ", "0.01"}], "\[IndentingNewLine]", 
+   RowBox[{"v0", " ", "=", " ", "0.05"}], "\[IndentingNewLine]", 
+   RowBox[{"d0", " ", "=", " ", "0.005"}], "\[IndentingNewLine]", 
+   RowBox[{"mu", " ", "=", " ", 
+    RowBox[{"v0", "/", "d0"}]}], "\[IndentingNewLine]", 
+   RowBox[{"nred", " ", "=", " ", 
+    RowBox[{"k0", "/", "d0"}]}], "\[IndentingNewLine]", 
+   RowBox[{"ngrey", "=", 
+    RowBox[{"k1", "/", "d0"}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"Export", "[", 
+    RowBox[{"\"\<Delaporte_type_k0_by_k1_10.csv\>\"", ",", 
+     RowBox[{"CoefficientList", "[", 
+      RowBox[{
+       RowBox[{"Series", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Exp", "[", 
+           RowBox[{"mu", "*", 
+            RowBox[{"(", 
+             RowBox[{"z", "-", "1"}], ")"}]}], "]"}], "*", 
+          RowBox[{"Power", "[", 
+           RowBox[{
+            RowBox[{"1", "+", 
+             RowBox[{"(", 
+              RowBox[{"mu", "*", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"z", "-", "1"}], ")"}], "/", "nred"}]}], ")"}]}], 
+            ",", 
+            RowBox[{"-", "ngrey"}]}], "]"}]}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"z", ",", " ", "0", ",", " ", "30"}], "}"}]}], "]"}], ",", 
+       "z"}], "]"}]}], "]"}], "\[IndentingNewLine]", 
+   RowBox[{"Export", "[", 
+    RowBox[{"\"\<Hypergeometric_pie_form_k0_by_k1_10.csv\>\"", ",", 
+     RowBox[{"CoefficientList", "[", 
+      RowBox[{
+       RowBox[{"Series", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Exp", "[", 
+           RowBox[{"mu", "*", 
+            RowBox[{"(", 
+             RowBox[{"z", "-", "1"}], ")"}]}], "]"}], "*", 
+          RowBox[{"Hypergeometric1F1", " ", "[", 
+           RowBox[{"ngrey", ",", " ", 
+            RowBox[{"nred", "+", "ngrey"}], ",", " ", 
+            RowBox[{
+             RowBox[{"-", "mu"}], "*", 
+             RowBox[{"(", 
+              RowBox[{"z", "-", "1"}], ")"}]}]}], "]"}]}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"z", ",", " ", "0", ",", " ", "30"}], "}"}]}], "]"}], ",", 
+       "z"}], "]"}]}], "]"}], "\[IndentingNewLine]", 
+   RowBox[{"Export", "[", 
+    RowBox[{"\"\<NB_k0_by_k1_10.csv\>\"", ",", 
+     RowBox[{"CoefficientList", "[", 
+      RowBox[{
+       RowBox[{"Series", "[", 
+        RowBox[{
+         RowBox[{"Power", "[", 
+          RowBox[{
+           RowBox[{"1", "-", 
+            RowBox[{"(", 
+             RowBox[{"mu", "*", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"z", "-", "1"}], ")"}], "/", "ngrey"}]}], ")"}]}], 
+           ",", 
+           RowBox[{"-", "nred"}]}], "]"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"z", ",", " ", "0", ",", " ", "30"}], "}"}]}], "]"}], ",", 
+       "z"}], "]"}]}], "]"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"k0", " ", "=", " ", "1"}], "\[IndentingNewLine]", 
+   RowBox[{"nred", " ", "=", " ", 
+    RowBox[{"k0", "/", "d0"}]}], "\[IndentingNewLine]", 
+   RowBox[{"ngrey", "=", 
+    RowBox[{"k1", "/", "d0"}]}], "\[IndentingNewLine]", 
+   RowBox[{"Export", "[", 
+    RowBox[{"\"\<Delaporte_type_k0_by_k1_100.csv\>\"", ",", 
+     RowBox[{"CoefficientList", "[", 
+      RowBox[{
+       RowBox[{"Series", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Exp", "[", 
+           RowBox[{"mu", "*", 
+            RowBox[{"(", 
+             RowBox[{"z", "-", "1"}], ")"}]}], "]"}], "*", 
+          RowBox[{"Power", "[", 
+           RowBox[{
+            RowBox[{"1", "+", 
+             RowBox[{"(", 
+              RowBox[{"mu", "*", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"z", "-", "1"}], ")"}], "/", "nred"}]}], ")"}]}], 
+            ",", 
+            RowBox[{"-", "ngrey"}]}], "]"}]}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"z", ",", " ", "0", ",", " ", "30"}], "}"}]}], "]"}], ",", 
+       "z"}], "]"}]}], "]"}], "\[IndentingNewLine]", 
+   RowBox[{"Export", "[", 
+    RowBox[{"\"\<Hypergeometric_pie_form_k0_by_k1_100.csv\>\"", ",", 
+     RowBox[{"CoefficientList", "[", 
+      RowBox[{
+       RowBox[{"Series", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Exp", "[", 
+           RowBox[{"mu", "*", 
+            RowBox[{"(", 
+             RowBox[{"z", "-", "1"}], ")"}]}], "]"}], "*", 
+          RowBox[{"Hypergeometric1F1", " ", "[", 
+           RowBox[{"ngrey", ",", " ", 
+            RowBox[{"nred", "+", "ngrey"}], ",", " ", 
+            RowBox[{
+             RowBox[{"-", "mu"}], "*", 
+             RowBox[{"(", 
+              RowBox[{"z", "-", "1"}], ")"}]}]}], "]"}]}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"z", ",", " ", "0", ",", " ", "30"}], "}"}]}], "]"}], ",", 
+       "z"}], "]"}]}], "]"}], "\[IndentingNewLine]", 
+   RowBox[{"Export", "[", 
+    RowBox[{"\"\<NB_k0_by_k1_100.csv\>\"", ",", 
+     RowBox[{"CoefficientList", "[", 
+      RowBox[{
+       RowBox[{"Series", "[", 
+        RowBox[{
+         RowBox[{"Power", "[", 
+          RowBox[{
+           RowBox[{"1", "-", 
+            RowBox[{"(", 
+             RowBox[{"mu", "*", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"z", "-", "1"}], ")"}], "/", "ngrey"}]}], ")"}]}], 
+           ",", 
+           RowBox[{"-", "nred"}]}], "]"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"z", ",", " ", "0", ",", " ", "30"}], "}"}]}], "]"}], ",", 
+       "z"}], "]"}]}], "]"}], "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.7884199870504103`*^9, 3.788420000852169*^9}, {
+  3.78842005406971*^9, 3.788420100499235*^9}, {3.788420135581327*^9, 
+  3.788420156550033*^9}},
+ CellLabel->
+  "In[113]:=",ExpressionUUID->"4242bd98-47c2-4f32-99a3-85624d2a2513"],
+
+Cell[BoxData["0.1`"], "Output",
+ CellChangeTimes->{3.788420168630451*^9},
+ CellLabel->
+  "Out[113]=",ExpressionUUID->"66c4a651-011e-4b11-a2a8-2547d0b0d150"],
+
+Cell[BoxData["0.01`"], "Output",
+ CellChangeTimes->{3.788420168632552*^9},
+ CellLabel->
+  "Out[114]=",ExpressionUUID->"119c406f-234d-44d3-a99a-f89c7953ac5c"],
+
+Cell[BoxData["0.05`"], "Output",
+ CellChangeTimes->{3.788420168633711*^9},
+ CellLabel->
+  "Out[115]=",ExpressionUUID->"f4c201c0-fed3-4406-8186-694ab590d449"],
+
+Cell[BoxData["0.005`"], "Output",
+ CellChangeTimes->{3.7884201686351757`*^9},
+ CellLabel->
+  "Out[116]=",ExpressionUUID->"bf668632-cbfe-4b7e-94dc-869d202efaa2"],
+
+Cell[BoxData["10.`"], "Output",
+ CellChangeTimes->{3.7884201686366997`*^9},
+ CellLabel->
+  "Out[117]=",ExpressionUUID->"22871b74-4629-4c3e-880c-37e26d422382"],
+
+Cell[BoxData["20.`"], "Output",
+ CellChangeTimes->{3.78842016863859*^9},
+ CellLabel->
+  "Out[118]=",ExpressionUUID->"9fdcac1d-cd1c-408f-8a18-de32a8eac143"],
+
+Cell[BoxData["2.`"], "Output",
+ CellChangeTimes->{3.788420168641535*^9},
+ CellLabel->
+  "Out[119]=",ExpressionUUID->"93bd2e4e-f9d0-4b77-b2b9-b0f8bf329232"],
+
+Cell[BoxData["\<\"Delaporte_type_k0_by_k1_10.csv\"\>"], "Output",
+ CellChangeTimes->{3.7884201686456127`*^9},
+ CellLabel->
+  "Out[120]=",ExpressionUUID->"51764653-14a7-410a-9f95-7b67d29d8ba2"],
+
+Cell[BoxData["\<\"Hypergeometric_pie_form_k0_by_k1_10.csv\"\>"], "Output",
+ CellChangeTimes->{3.788420168648492*^9},
+ CellLabel->
+  "Out[121]=",ExpressionUUID->"42c4228e-47f8-4699-bafc-4bc6b5f8471b"],
+
+Cell[BoxData["\<\"NB_k0_by_k1_10.csv\"\>"], "Output",
+ CellChangeTimes->{3.7884201686513643`*^9},
+ CellLabel->
+  "Out[122]=",ExpressionUUID->"b618b958-05dd-4d1c-8dbb-d801acf330bb"],
+
+Cell[BoxData["1"], "Output",
+ CellChangeTimes->{3.7884201686544867`*^9},
+ CellLabel->
+  "Out[123]=",ExpressionUUID->"606bf2e3-d420-457d-a276-241ddd272dc9"],
+
+Cell[BoxData["200.`"], "Output",
+ CellChangeTimes->{3.788420168657505*^9},
+ CellLabel->
+  "Out[124]=",ExpressionUUID->"9c42ee6a-9e6c-4704-a310-a7dcc74175f4"],
+
+Cell[BoxData["2.`"], "Output",
+ CellChangeTimes->{3.788420168660535*^9},
+ CellLabel->
+  "Out[125]=",ExpressionUUID->"c697307f-7683-46c7-a7ac-1f4e5d8c06a7"],
+
+Cell[BoxData["\<\"Delaporte_type_k0_by_k1_100.csv\"\>"], "Output",
+ CellChangeTimes->{3.7884201686636753`*^9},
+ CellLabel->
+  "Out[126]=",ExpressionUUID->"29b378b5-f3f6-4e70-bd64-eea005144fe5"],
+
+Cell[BoxData["\<\"Hypergeometric_pie_form_k0_by_k1_100.csv\"\>"], "Output",
+ CellChangeTimes->{3.7884201686666813`*^9},
+ CellLabel->
+  "Out[127]=",ExpressionUUID->"e4fa1fc5-877c-4f9a-b1dc-7465484bf71b"],
+
+Cell[BoxData["\<\"NB_k0_by_k1_100.csv\"\>"], "Output",
+ CellChangeTimes->{3.7884201686696787`*^9},
+ CellLabel->
+  "Out[128]=",ExpressionUUID->"eb5fb13c-3d4b-494b-af33-63e6da9bb6ff"]
+}, Open  ]]
+},
+WindowSize->{808, 676},
+WindowMargins->{{Automatic, 17}, {Automatic, 0}},
+FrontEndVersion->"12.0 for Mac OS X x86 (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 6235, 161, 724, "Input",ExpressionUUID->"4242bd98-47c2-4f32-99a3-85624d2a2513"],
+Cell[6818, 185, 156, 3, 34, "Output",ExpressionUUID->"66c4a651-011e-4b11-a2a8-2547d0b0d150"],
+Cell[6977, 190, 157, 3, 34, "Output",ExpressionUUID->"119c406f-234d-44d3-a99a-f89c7953ac5c"],
+Cell[7137, 195, 157, 3, 34, "Output",ExpressionUUID->"f4c201c0-fed3-4406-8186-694ab590d449"],
+Cell[7297, 200, 160, 3, 34, "Output",ExpressionUUID->"bf668632-cbfe-4b7e-94dc-869d202efaa2"],
+Cell[7460, 205, 158, 3, 34, "Output",ExpressionUUID->"22871b74-4629-4c3e-880c-37e26d422382"],
+Cell[7621, 210, 155, 3, 34, "Output",ExpressionUUID->"9fdcac1d-cd1c-408f-8a18-de32a8eac143"],
+Cell[7779, 215, 155, 3, 34, "Output",ExpressionUUID->"93bd2e4e-f9d0-4b77-b2b9-b0f8bf329232"],
+Cell[7937, 220, 192, 3, 34, "Output",ExpressionUUID->"51764653-14a7-410a-9f95-7b67d29d8ba2"],
+Cell[8132, 225, 199, 3, 34, "Output",ExpressionUUID->"42c4228e-47f8-4699-bafc-4bc6b5f8471b"],
+Cell[8334, 230, 180, 3, 34, "Output",ExpressionUUID->"b618b958-05dd-4d1c-8dbb-d801acf330bb"],
+Cell[8517, 235, 155, 3, 34, "Output",ExpressionUUID->"606bf2e3-d420-457d-a276-241ddd272dc9"],
+Cell[8675, 240, 157, 3, 34, "Output",ExpressionUUID->"9c42ee6a-9e6c-4704-a310-a7dcc74175f4"],
+Cell[8835, 245, 155, 3, 34, "Output",ExpressionUUID->"c697307f-7683-46c7-a7ac-1f4e5d8c06a7"],
+Cell[8993, 250, 193, 3, 34, "Output",ExpressionUUID->"29b378b5-f3f6-4e70-bd64-eea005144fe5"],
+Cell[9189, 255, 202, 3, 34, "Output",ExpressionUUID->"e4fa1fc5-877c-4f9a-b1dc-7465484bf71b"],
+Cell[9394, 260, 181, 3, 92, "Output",ExpressionUUID->"eb5fb13c-3d4b-494b-af33-63e6da9bb6ff"]
+}, Open  ]]
+}
+]
+*)
+
